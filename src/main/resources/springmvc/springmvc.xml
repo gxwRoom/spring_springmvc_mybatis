@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+	 	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
+      <!--1. 扫描controller控制注解包-->
+      <context:component-scan base-package="com.gxw.controller">
+          <context:include-filter type="annotation"
+                                  expression="com.gxw.controller"/>
+      </context:component-scan>
+
+      <!--2. 启动mvc注解(必须开启)-->
+      <mvc:annotation-driven></mvc:annotation-driven>
+
+      <!--3. 开启定时任务-->
+      <task:annotation-driven></task:annotation-driven>
+
+      <!--4. 配置静态资源-->
+      <mvc:default-servlet-handler></mvc:default-servlet-handler>
+
+      <!--5. 配置springmvc视图解析器-->
+      <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+          <!--5.1 前缀名称-->
+          <property name="prefix" value="/WEB-INF/views/"></property>
+          <!--5.2 后缀名称-->
+          <property name="suffix" value=".jsp"></property>
+      </bean>
+
+      <!--6.文件上传-->
+      <bean id="" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+          <!--6.1 上传文件大小限制 -->
+          <property name="maxInMemorySize">
+              <value>10485760</value>
+          </property>
+          <!--6.2 请求编码格式与jsp一致-->
+          <property name="defaultEncoding">
+              <value>UTF-8</value>
+          </property>
+      </bean>
+
+      <!--7.拦截器设置(需要可进行配置)-->
+      <!--<mvc:interceptors>-->
+          <!--<mvc:interceptor>-->
+              <!--&lt;!&ndash;7.1 /下不进行拦截&ndash;&gt;-->
+              <!--<mvc:mapping path="/"/>-->
+              <!--<mvc:exclude-mapping path=""/>-->
+              <!--&lt;!&ndash;7.2 需要设置要拦截类的对象&ndash;&gt;-->
+              <!--<bean class=""></bean>-->
+          <!--</mvc:interceptor>-->
+      <!--</mvc:interceptors>-->
+</beans>

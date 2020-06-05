@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxw.mapper.UserMapper">
+
+	<!--建立对应关系 一对多关系-->
+	<resultMap id="userMap" type="User">
+		<id column="id" property="id"/>
+		<result column="username" property="username"/>
+		<result column="sex" property="sex"/>
+		<result column="birthday" property="birthday"/>
+		<result column="address" property="address"/>
+		<!--从表指向主表，建立关联关系，实现一对多关系 collection:用于建立一对多关系；ofType：用于指定集合元素的数据类型-->
+		<collection property="accounts" ofType="Account">
+			<id column="ID" property="ID"/>
+			<result column="UID" property="UID"/>
+			<result column="MONEY" property="MONEY"/>
+		</collection>
+	</resultMap>
+
+	<!--实现一对多关联查询，查询用户信息，同时查询出用户的账号信息-->
+	<select id="findUserAndAccount" resultMap="userMap">
+		select u.*,a.ID,a.UID,a.MONEY from user u left join account a on u.id=a.UID;
+	</select>
+
+	<!--查询所有用户 别名-->
+	<!--<select id="findUser" resultType="User">-->
+	<!--select * from user-->
+	<!--</select>-->
+
+	<!--根据id查询用户对象-->
+	<select id="findUserById" resultType="com.gxw.pojo.User" parameterType="int">
+		select * from user where id=#{id}
+	</select>
+
+	<!--查询所有用户-->
+	<select id="findUser" resultType="com.gxw.pojo.User">
+		select * from user
+	</select>
+
+	<!--分页查询用户-->
+	<select id="findUserPage" resultType="com.gxw.pojo.User" parameterType="map">
+		select * from user limit #{pageStart},#{pageSize}
+	</select>
+
+	<!--根据名称模糊查询用户-->
+	<select id="findUserByName" resultType="com.gxw.pojo.User" parameterType="java.lang.String">
+		select * from user where username like #{username}
+	</select>
+
+	<!--查询总数-->
+	<select id="findTotal" resultType="java.lang.Integer">
+		select count(*) from user
+	</select>
+
+	<!--添加用户-->
+	<insert id="addUser" parameterType="com.gxw.pojo.User">
+		insert into user(username,birthday,sex,address) values(#{username},#{birthday},#{sex},#{address})
+	</insert>
+
+	<!--更新用户-->
+	<update id="updateUser" parameterType="com.gxw.pojo.User" >
+		update user set username=#{username},birthday=#{birthday},sex=#{sex},address=#{address} where id=#{id}
+	</update>
+
+	<!--根据id删除用户-->
+	<delete id="deleteUserById" parameterType="java.lang.Integer">
+		delete from user where id=#{id}
+	</delete>
+</mapper>

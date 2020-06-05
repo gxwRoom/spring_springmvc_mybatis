@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxw.mapper.AccountMapper">
+
+    <!--建立对应关系,查询账号-->
+    <resultMap type="Account" id="accountMap">
+        <id column="ID" property="ID"/>
+        <result column="UID" property="UID"/>
+        <result column="MONEY" property="MONEY"/>
+        <!--用于从表指向主表实体类属性，association实现一对一 这里的user要与账号实体类里的User user中的user对应-->
+        <association property="user" javaType="user">
+            <id column="id" property="id"/>
+            <result column="username" property="username"/>
+            <result column="sex" property="sex"/>
+            <result column="birthday" property="birthday"/>
+            <result column="address" property="address"/>
+        </association>
+    </resultMap>
+
+    <!--查询账号，同时查询账号下的用户信息-->
+    <select id="findAll" resultMap="accountMap">
+           select u.*,a.ID,a.UID,a.MONEY from account a,user u where a.UID=u.id;
+    </select>
+</mapper>
