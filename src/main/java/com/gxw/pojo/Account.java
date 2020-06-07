@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author GXW工作室
  * @date 2020/6/2 0002 - 11:02
  */
-
+@Component
 public class Account implements Serializable{
     private Integer ID;
     private Integer UID;

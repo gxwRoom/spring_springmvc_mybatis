@@ -11,7 +11,7 @@ import java.util.List;
  * @author GXW工作室
  * @date 2020/6/5 0005 - 00:26
  */
-
+@Component
 public class User implements Serializable {
     private Integer id;
     private String username;
