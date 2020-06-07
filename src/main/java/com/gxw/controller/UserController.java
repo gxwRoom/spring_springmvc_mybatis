@@ -1,6 +1,5 @@
 package com.gxw.controller;
 
-import com.gxw.pojo.User;
 import com.gxw.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,9 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * User用户控制器
@@ -28,11 +24,11 @@ public class UserController {
      *
      * @return
      */
-    @RequestMapping(value = "/findUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/findUser", method = RequestMethod.POST)
     @ResponseBody
-    public void  tofindUser(HttpSession session) {
-        List<User> users = userService.findAll();
-        session.setAttribute("list",users);
-        System.out.println("--->查询数据:"+users);
+    public ModelAndView toFindUser(ModelAndView model){
+        model.setViewName("success");
+        System.out.println("控制器");
+        return model;
     }
 }

@@ -45,15 +45,15 @@
           <filter-name>characterEncodingFilter</filter-name>
           <url-pattern>/*</url-pattern>
       </filter-mapping>
-      <!--处理请求乱码-->
-      <filter>
-          <filter-name>hiddenHttpMethodFilter</filter-name>
-          <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
-      </filter>
-      <filter-mapping>
-          <filter-name>hiddenHttpMethodFilter</filter-name>
-          <url-pattern>/*</url-pattern>
-      </filter-mapping>
+      <!--&lt;!&ndash;处理请求乱码&ndash;&gt;-->
+      <!--<filter>-->
+          <!--<filter-name>hiddenHttpMethodFilter</filter-name>-->
+          <!--<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>-->
+      <!--</filter>-->
+      <!--<filter-mapping>-->
+          <!--<filter-name>hiddenHttpMethodFilter</filter-name>-->
+          <!--<url-pattern>/*</url-pattern>-->
+      <!--</filter-mapping>-->
 
       <!--4.日志配置 -->
       <context-param>
@@ -70,4 +70,8 @@
           <error-code>500</error-code>
           <location>/WEB-INF/errors/500.jsp</location>
       </error-page>
+    
+    <welcome-file-list>
+        <welcome-file>/index.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public interface UserService {
     //查询全部
-    List<User> findAll();
+    List<User> selectUser(String username);
 
     //根据id查询用户对象
     User findUserById(Integer id);

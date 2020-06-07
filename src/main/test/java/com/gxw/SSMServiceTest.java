@@ -38,8 +38,8 @@ public class SSMServiceTest {
      * 1.查询所有测试
      */
     @Test
-    public void findUserTest(){
-        List<User> findAll = userService.findAll();
+    public void findUserTest(String username){
+        List<User> findAll = userService.selectUser(username);
         System.out.println("---->查询所有用户信息："+findAll);
     }
 

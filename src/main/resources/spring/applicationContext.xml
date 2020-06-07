@@ -2,14 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
   	 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
- 	 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+ 	 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
     <!--1.扫描注解类-->
     <context:component-scan base-package="com.gxw">
-        <context:include-filter type="annotation"
-                    expression="org.springframework.stereotype.Component" />
         <context:include-filter type="annotation"
                     expression="org.springframework.stereotype.Repository" />
         <context:include-filter type="annotation"
@@ -36,23 +34,42 @@
         <property name="dataSource" ref="dataSource"></property>
     </bean>
 
-    <!--6.启动事务管理(必须开启)-->
+    <!--6.配置声明式事务-->
+    <tx:advice id="txAdivce">
+        <!--配置哪些方法需要进行事务控制-->
+        <tx:attributes>
+            <tx:method name="ins*"/>
+            <tx:method name="upd*"/>
+            <tx:method name="del*"/>
+            <tx:method name="sel*"/>
+            <tx:method name="*" read-only="true"></tx:method>
+        </tx:attributes>
+    </tx:advice>
+
+    <!--配置AOP切面，切点-->
+    <aop:config>
+        <!--配置切点-->
+        <aop:pointcut id="mypoint" expression="execution(* com.gxw.service.impl.*.*(..))"></aop:pointcut>
+        <aop:advisor advice-ref="txAdivce" pointcut-ref="transactionManager"></aop:advisor>
+    </aop:config>
+
+    <!--7.启动事务管理(必须开启)-->
     <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
 
-    <!--7.spring整合mybatis 交由给spring框架来管理 通过构建sqlSessionFactoryBean对象获取 sqlSessionFactory 工厂类-->
+    <!--8.spring整合mybatis 交由给spring框架来管理 通过构建sqlSessionFactoryBean对象获取 sqlSessionFactory 工厂类-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"></property>
-        <!--7.1 扫描pojo实体包 使用别名类型-->
+        <!--8.1 扫描pojo实体包 使用别名类型-->
         <property name="typeAliasesPackage" value="com.gxw.pojo"></property>
-        <!--7.2 扫描mapper.xml配置文件-->
+        <!--8.2 扫描mapper.xml配置文件-->
         <property name="mapperLocations" value="classpath:mybatis/mapper/*.xml"></property>
     </bean>
 
-    <!--8.配置dao层 mapper映射 实现mapper接口类-->
+    <!--9.配置dao层 mapper映射 实现mapper接口类-->
     <bean id="configurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <!--8.1 扫描 dao层mapper包，使用别名 -->
+        <!--9.1 扫描 dao层mapper包，使用别名 -->
         <property name="basePackage" value="com.gxw.mapper"></property>
-        <!--8.2 将spring管理的工厂引用使用-->
+        <!--9.2 将spring管理的工厂引用使用-->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
 

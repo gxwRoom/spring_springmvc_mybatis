@@ -1,8 +1,8 @@
 package com.gxw.mapper;
 
 import com.gxw.pojo.User;
-import org.apache.ibatis.annotations.Mapper;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -11,14 +11,14 @@ import java.util.Map;
  * @author GXW工作室
  * @date 2020/6/1 0001 - 21:39
  */
-@Mapper
+@Resource
 public interface UserMapper {
 
     //根据id查询用户对象
     User findUserById(Integer id);
 
     //查询所有用户信息
-    List<User> findUser();
+    List<User> selectUser();
 
     //分页查询用户信息
     List<User> findUserPage(Map<String,Object>map);

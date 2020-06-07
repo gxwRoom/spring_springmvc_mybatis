@@ -3,6 +3,8 @@ package com.gxw.service.impl;
 import com.gxw.mapper.UserMapper;
 import com.gxw.pojo.User;
 import com.gxw.service.UserService;
+import org.apache.ibatis.annotations.Param;
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import java.util.Map;
  * @author GXW工作室
  * @date 2020/6/5 0005 - 00:57
  */
+@Aspect
 @Service
 public class UserServiceImpl implements UserService{
     @Autowired
@@ -20,8 +23,8 @@ public class UserServiceImpl implements UserService{
 
     //查询所有
     @Override
-    public List<User> findAll() {
-        return userMapper.findUser();
+    public List<User> selectUser(@Param("username")String username) {
+        return userMapper.selectUser();
     }
 
     //根据id查询

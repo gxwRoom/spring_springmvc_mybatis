@@ -9,9 +9,9 @@
         <relativePath>../school_hostipal/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <packaging>war</packaging>
 
     <artifactId>spring_springmvc_mybatis</artifactId>
-    <packaging>war</packaging>
 
     <name>spring_springmvc_mybatis Maven Webapp</name>
     <!-- FIXME change it to the project's website -->
@@ -73,6 +73,16 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
             <version>${spring.version}</version>
         </dependency>
         <!-- 第二部分：Servlet web -->
@@ -147,6 +157,10 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -185,4 +199,22 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <resources>
+        <resource>
+            <directory>src/main/webapp</directory>
+            <!--注意此次必须要放在此目录下才能被访问到 -->
+            <targetPath>META-INF/resources</targetPath>
+            <includes>
+                <include>**/**</include>
+            </includes>
+        </resource>
+        <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+            <includes>
+                <include>**/**</include>
+            </includes>
+        </resource>
+    </resources>
 </project>
